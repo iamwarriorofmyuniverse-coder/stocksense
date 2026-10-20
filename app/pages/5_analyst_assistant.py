@@ -25,7 +25,9 @@ Ask operational questions about forecasting accuracy, store anomalies, or replen
 
 # Assistant probing for active engine
 probe_assistant = AnalystAssistant()
-active_mode = probe_assistant.active_provider
+active_mode = getattr(probe_assistant, "active_provider", "deterministic")
+if callable(active_mode):
+    active_mode = active_mode()
 
 st.sidebar.header("⚡ Built-in AI Engine")
 if active_mode == "groq":
