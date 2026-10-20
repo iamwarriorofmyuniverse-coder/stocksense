@@ -1,0 +1,21 @@
+project:
+  name: "stocksense"
+  version: "0.1.0"
+  random_seed: 42
+
+paths:
+  raw_data_dir: "data/raw"
+  synthetic_data_dir: "data/synthetic"
+  processed_data_dir: "data/processed"
+  artifacts_dir: "artifacts"
+  results_dir: "results"
+
+forecast:
+  horizon_days: 28
+  backtest_folds: 3
+  backtest_step_days: 28
+
+data_sampling:
+  # For local agile development and demonstration
+  sample_stores: ["CA_1", "TX_1"]
+  max_items_per_category: 30

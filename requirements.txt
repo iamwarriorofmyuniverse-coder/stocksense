@@ -1,0 +1,15 @@
+# Production Dependencies for StockSense Engine, API, and Dashboard
+pandas>=2.0.0,<4.0.0
+numpy>=1.24.0,<3.0.0
+scipy>=1.10.0,<2.0.0
+scikit-learn>=1.3.0,<2.0.0
+lightgbm>=4.0.0,<5.0.0
+fastapi>=0.100.0,<1.0.0
+uvicorn>=0.23.0,<1.0.0
+streamlit>=1.25.0,<2.0.0
+pydantic>=2.0.0,<3.0.0
+pyyaml>=6.0,<7.0
+tabulate>=0.9.0,<1.0.0
+pyarrow>=14.0.0,<27.0.0
+plotly>=5.15.0,<7.0.0
+joblib>=1.3.0,<2.0.0

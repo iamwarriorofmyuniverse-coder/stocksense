@@ -1,0 +1,226 @@
+{
+  "naive": {
+    "global": {
+      "mae": 2.6208,
+      "wape": 0.6731,
+      "bias": -0.1738
+    },
+    "by_category": [
+      {
+        "cat_id": "FOODS",
+        "mae": 5.4339,
+        "wape": 0.5721,
+        "bias": -0.1262,
+        "total_actual": 5319.0,
+        "total_pred": 4648.0,
+        "count": 560
+      },
+      {
+        "cat_id": "HOBBIES",
+        "mae": 0.6732,
+        "wape": 1.0865,
+        "bias": -0.6772,
+        "total_actual": 347.0,
+        "total_pred": 112.0,
+        "count": 560
+      },
+      {
+        "cat_id": "HOUSEHOLD",
+        "mae": 1.7554,
+        "wape": 1.1234,
+        "bias": -0.264,
+        "total_actual": 875.0,
+        "total_pred": 644.0,
+        "count": 560
+      }
+    ],
+    "by_store": [
+      {
+        "store_id": "CA_1",
+        "mae": 2.7071,
+        "wape": 0.6817,
+        "bias": -0.1942,
+        "total_actual": 3336.0,
+        "total_pred": 2688.0,
+        "count": 840
+      },
+      {
+        "store_id": "CA_2",
+        "mae": 2.5345,
+        "wape": 0.6643,
+        "bias": -0.1526,
+        "total_actual": 3205.0,
+        "total_pred": 2716.0,
+        "count": 840
+      }
+    ]
+  },
+  "seasonal_naive_7d": {
+    "global": {
+      "mae": 3.053,
+      "wape": 0.7841,
+      "bias": 0.1166
+    },
+    "by_category": [
+      {
+        "cat_id": "FOODS",
+        "mae": 6.1625,
+        "wape": 0.6488,
+        "bias": 0.1122,
+        "total_actual": 5319.0,
+        "total_pred": 5916.0,
+        "count": 560
+      },
+      {
+        "cat_id": "HOBBIES",
+        "mae": 0.9946,
+        "wape": 1.6052,
+        "bias": 0.1873,
+        "total_actual": 347.0,
+        "total_pred": 412.0,
+        "count": 560
+      },
+      {
+        "cat_id": "HOUSEHOLD",
+        "mae": 2.0018,
+        "wape": 1.2811,
+        "bias": 0.1154,
+        "total_actual": 875.0,
+        "total_pred": 976.0,
+        "count": 560
+      }
+    ],
+    "by_store": [
+      {
+        "store_id": "CA_1",
+        "mae": 3.0595,
+        "wape": 0.7704,
+        "bias": 0.0731,
+        "total_actual": 3336.0,
+        "total_pred": 3580.0,
+        "count": 840
+      },
+      {
+        "store_id": "CA_2",
+        "mae": 3.0464,
+        "wape": 0.7984,
+        "bias": 0.1619,
+        "total_actual": 3205.0,
+        "total_pred": 3724.0,
+        "count": 840
+      }
+    ]
+  },
+  "moving_average_7d": {
+    "global": {
+      "mae": 2.477,
+      "wape": 0.6362,
+      "bias": 0.1166
+    },
+    "by_category": [
+      {
+        "cat_id": "FOODS",
+        "mae": 4.9202,
+        "wape": 0.518,
+        "bias": 0.1122,
+        "total_actual": 5319.0,
+        "total_pred": 5916.0,
+        "count": 560
+      },
+      {
+        "cat_id": "HOBBIES",
+        "mae": 0.8737,
+        "wape": 1.41,
+        "bias": 0.1873,
+        "total_actual": 347.0,
+        "total_pred": 412.0,
+        "count": 560
+      },
+      {
+        "cat_id": "HOUSEHOLD",
+        "mae": 1.637,
+        "wape": 1.0477,
+        "bias": 0.1154,
+        "total_actual": 875.0,
+        "total_pred": 976.0,
+        "count": 560
+      }
+    ],
+    "by_store": [
+      {
+        "store_id": "CA_1",
+        "mae": 2.4452,
+        "wape": 0.6157,
+        "bias": 0.0731,
+        "total_actual": 3336.0,
+        "total_pred": 3579.999755859375,
+        "count": 840
+      },
+      {
+        "store_id": "CA_2",
+        "mae": 2.5087,
+        "wape": 0.6575,
+        "bias": 0.1619,
+        "total_actual": 3205.0,
+        "total_pred": 3724.0,
+        "count": 840
+      }
+    ]
+  },
+  "moving_average_28d": {
+    "global": {
+      "mae": 2.3256,
+      "wape": 0.5973,
+      "bias": 0.009
+    },
+    "by_category": [
+      {
+        "cat_id": "FOODS",
+        "mae": 4.6608,
+        "wape": 0.4907,
+        "bias": 0.0256,
+        "total_actual": 5319.0,
+        "total_pred": 5455.0,
+        "count": 560
+      },
+      {
+        "cat_id": "HOBBIES",
+        "mae": 0.7943,
+        "wape": 1.2818,
+        "bias": 0.0432,
+        "total_actual": 347.0,
+        "total_pred": 362.0,
+        "count": 560
+      },
+      {
+        "cat_id": "HOUSEHOLD",
+        "mae": 1.5218,
+        "wape": 0.974,
+        "bias": -0.1051,
+        "total_actual": 875.0,
+        "total_pred": 783.0,
+        "count": 560
+      }
+    ],
+    "by_store": [
+      {
+        "store_id": "CA_1",
+        "mae": 2.3428,
+        "wape": 0.5899,
+        "bias": -0.0027,
+        "total_actual": 3336.0,
+        "total_pred": 3327.00048828125,
+        "count": 840
+      },
+      {
+        "store_id": "CA_2",
+        "mae": 2.3085,
+        "wape": 0.605,
+        "bias": 0.0212,
+        "total_actual": 3205.0,
+        "total_pred": 3273.0,
+        "count": 840
+      }
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "parameters": {
+    "lead_time_days": 3,
+    "target_service_level": 0.95,
+    "review_period_days": 1,
+    "simulated_days": 28,
+    "num_skus": 60
+  },
+  "baseline_policy": {
+    "total_demand": 6541.0,
+    "fulfilled_units": 6457.969991178513,
+    "lost_sales_units": 83.03000882148743,
+    "spoilage_units": 211.59000000000003,
+    "avg_on_hand_units": 11.73,
+    "fill_rate_pct": 98.73,
+    "stockout_rate_pct": 1.27,
+    "total_orders_placed": 6650.0,
+    "holding_cost_usd": 3401.52,
+    "stockout_penalty_usd": 1550.8,
+    "spoilage_cost_usd": 922.65,
+    "total_operational_cost_usd": 5874.97
+  },
+  "model_policy": {
+    "total_demand": 6541.0,
+    "fulfilled_units": 6446.4901542472835,
+    "lost_sales_units": 94.50984575271609,
+    "spoilage_units": 189.70000000000002,
+    "avg_on_hand_units": 10.53,
+    "fill_rate_pct": 98.56,
+    "stockout_rate_pct": 1.44,
+    "total_orders_placed": 6717.0,
+    "holding_cost_usd": 3025.48,
+    "stockout_penalty_usd": 1790.65,
+    "spoilage_cost_usd": 811.36,
+    "total_operational_cost_usd": 5627.49
+  },
+  "operational_delta": {
+    "stockout_reduction_pct": -13.83,
+    "cost_reduction_pct": 4.21,
+    "avg_inventory_change_pct": 10.23
+  }
+}

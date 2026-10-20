@@ -1,0 +1,53 @@
+name: StockSense CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test-and-verify:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt -r requirements-dev.txt
+
+      - name: Lint and code style check (Ruff)
+        run: |
+          ruff check src tests
+
+      - name: Generate synthetic dataset for CI
+        run: |
+          python -m src.data.synthetic --output-dir data/synthetic --num-days 120 --num-stores 2 --num-items 20
+
+      - name: Run unit and leakage test suite (Pytest)
+        run: |
+          pytest tests/ -v
+
+      - name: Verify end-to-end training and backtesting pipeline
+        run: |
+          python -m src.models.train
+
+      - name: Verify failure analysis pipeline
+        run: |
+          python -m src.evaluation.failure_analysis
+
+      - name: Verify replenishment simulation pipeline
+        run: |
+          python -m src.simulation.run_simulation

@@ -1,0 +1,394 @@
+{
+  "global": [
+    {
+      "model": "lgbm",
+      "mae": 2.3967,
+      "wape": 0.6028,
+      "bias": -0.1464,
+      "total_actual": 20039.0
+    },
+    {
+      "model": "moving_average_28d",
+      "mae": 2.3878,
+      "wape": 0.6005,
+      "bias": 0.0095,
+      "total_actual": 20039.0
+    },
+    {
+      "model": "moving_average_7d",
+      "mae": 2.5177,
+      "wape": 0.6332,
+      "bias": 0.0549,
+      "total_actual": 20039.0
+    },
+    {
+      "model": "naive",
+      "mae": 2.7538,
+      "wape": 0.6926,
+      "bias": -0.184,
+      "total_actual": 20039.0
+    },
+    {
+      "model": "seasonal_naive_7d",
+      "mae": 2.999,
+      "wape": 0.7543,
+      "bias": 0.0549,
+      "total_actual": 20039.0
+    }
+  ],
+  "by_category": [
+    {
+      "cat_id": "FOODS",
+      "model": "lgbm",
+      "mae": 4.9205,
+      "wape": 0.5052,
+      "bias": -0.1106,
+      "total_actual": 16363.0
+    },
+    {
+      "cat_id": "HOBBIES",
+      "model": "lgbm",
+      "mae": 0.7494,
+      "wape": 1.1466,
+      "bias": -0.2966,
+      "total_actual": 1098.0
+    },
+    {
+      "cat_id": "HOUSEHOLD",
+      "model": "lgbm",
+      "mae": 1.5202,
+      "wape": 0.9907,
+      "bias": -0.31,
+      "total_actual": 2578.0
+    },
+    {
+      "cat_id": "FOODS",
+      "model": "moving_average_28d",
+      "mae": 4.783,
+      "wape": 0.4911,
+      "bias": 0.014,
+      "total_actual": 16363.0
+    },
+    {
+      "cat_id": "HOBBIES",
+      "model": "moving_average_28d",
+      "mae": 0.8189,
+      "wape": 1.253,
+      "bias": 0.0027,
+      "total_actual": 1098.0
+    },
+    {
+      "cat_id": "HOUSEHOLD",
+      "model": "moving_average_28d",
+      "mae": 1.5614,
+      "wape": 1.0175,
+      "bias": -0.0163,
+      "total_actual": 2578.0
+    },
+    {
+      "cat_id": "FOODS",
+      "model": "moving_average_7d",
+      "mae": 5.0593,
+      "wape": 0.5194,
+      "bias": 0.0602,
+      "total_actual": 16363.0
+    },
+    {
+      "cat_id": "HOBBIES",
+      "model": "moving_average_7d",
+      "mae": 0.8646,
+      "wape": 1.3229,
+      "bias": 0.0565,
+      "total_actual": 1098.0
+    },
+    {
+      "cat_id": "HOUSEHOLD",
+      "model": "moving_average_7d",
+      "mae": 1.6293,
+      "wape": 1.0617,
+      "bias": 0.0209,
+      "total_actual": 2578.0
+    },
+    {
+      "cat_id": "FOODS",
+      "model": "naive",
+      "mae": 5.6994,
+      "wape": 0.5852,
+      "bias": -0.1598,
+      "total_actual": 16363.0
+    },
+    {
+      "cat_id": "HOBBIES",
+      "model": "naive",
+      "mae": 0.756,
+      "wape": 1.1566,
+      "bias": -0.541,
+      "total_actual": 1098.0
+    },
+    {
+      "cat_id": "HOUSEHOLD",
+      "model": "naive",
+      "mae": 1.806,
+      "wape": 1.1769,
+      "bias": -0.1854,
+      "total_actual": 2578.0
+    },
+    {
+      "cat_id": "FOODS",
+      "model": "seasonal_naive_7d",
+      "mae": 6.0601,
+      "wape": 0.6222,
+      "bias": 0.0602,
+      "total_actual": 16363.0
+    },
+    {
+      "cat_id": "HOBBIES",
+      "model": "seasonal_naive_7d",
+      "mae": 0.9869,
+      "wape": 1.51,
+      "bias": 0.0565,
+      "total_actual": 1098.0
+    },
+    {
+      "cat_id": "HOUSEHOLD",
+      "model": "seasonal_naive_7d",
+      "mae": 1.95,
+      "wape": 1.2708,
+      "bias": 0.0209,
+      "total_actual": 2578.0
+    }
+  ],
+  "by_store": [
+    {
+      "store_id": "CA_1",
+      "model": "lgbm",
+      "mae": 2.4393,
+      "wape": 0.6044,
+      "bias": -0.1383,
+      "total_actual": 10171.0
+    },
+    {
+      "store_id": "CA_2",
+      "model": "lgbm",
+      "mae": 2.3541,
+      "wape": 0.6012,
+      "bias": -0.1548,
+      "total_actual": 9868.0
+    },
+    {
+      "store_id": "CA_1",
+      "model": "moving_average_28d",
+      "mae": 2.4463,
+      "wape": 0.6061,
+      "bias": 0.0079,
+      "total_actual": 10171.0
+    },
+    {
+      "store_id": "CA_2",
+      "model": "moving_average_28d",
+      "mae": 2.3292,
+      "wape": 0.5948,
+      "bias": 0.0111,
+      "total_actual": 9868.0
+    },
+    {
+      "store_id": "CA_1",
+      "model": "moving_average_7d",
+      "mae": 2.5742,
+      "wape": 0.6378,
+      "bias": 0.0386,
+      "total_actual": 10171.0
+    },
+    {
+      "store_id": "CA_2",
+      "model": "moving_average_7d",
+      "mae": 2.4612,
+      "wape": 0.6285,
+      "bias": 0.0717,
+      "total_actual": 9868.0
+    },
+    {
+      "store_id": "CA_1",
+      "model": "naive",
+      "mae": 2.7948,
+      "wape": 0.6925,
+      "bias": -0.1246,
+      "total_actual": 10171.0
+    },
+    {
+      "store_id": "CA_2",
+      "model": "naive",
+      "mae": 2.7127,
+      "wape": 0.6927,
+      "bias": -0.2452,
+      "total_actual": 9868.0
+    },
+    {
+      "store_id": "CA_1",
+      "model": "seasonal_naive_7d",
+      "mae": 3.0337,
+      "wape": 0.7516,
+      "bias": 0.0386,
+      "total_actual": 10171.0
+    },
+    {
+      "store_id": "CA_2",
+      "model": "seasonal_naive_7d",
+      "mae": 2.9643,
+      "wape": 0.757,
+      "bias": 0.0717,
+      "total_actual": 9868.0
+    }
+  ],
+  "by_demand_type": [
+    {
+      "demand_type": "Intermittent",
+      "model": "lgbm",
+      "mae": 1.156,
+      "wape": 1.03,
+      "bias": -0.3088,
+      "total_actual": 3394.0
+    },
+    {
+      "demand_type": "Lumpy",
+      "model": "lgbm",
+      "mae": 0.944,
+      "wape": 1.1248,
+      "bias": -0.2724,
+      "total_actual": 282.0
+    },
+    {
+      "demand_type": "Smooth",
+      "model": "lgbm",
+      "mae": 4.9205,
+      "wape": 0.5052,
+      "bias": -0.1106,
+      "total_actual": 16363.0
+    },
+    {
+      "demand_type": "Intermittent",
+      "model": "moving_average_28d",
+      "mae": 1.2104,
+      "wape": 1.0784,
+      "bias": -0.0121,
+      "total_actual": 3394.0
+    },
+    {
+      "demand_type": "Lumpy",
+      "model": "moving_average_28d",
+      "mae": 1.0079,
+      "wape": 1.2009,
+      "bias": 0.0071,
+      "total_actual": 282.0
+    },
+    {
+      "demand_type": "Smooth",
+      "model": "moving_average_28d",
+      "mae": 4.783,
+      "wape": 0.4911,
+      "bias": 0.014,
+      "total_actual": 16363.0
+    },
+    {
+      "demand_type": "Intermittent",
+      "model": "moving_average_7d",
+      "mae": 1.2548,
+      "wape": 1.118,
+      "bias": 0.0171,
+      "total_actual": 3394.0
+    },
+    {
+      "demand_type": "Lumpy",
+      "model": "moving_average_7d",
+      "mae": 1.176,
+      "wape": 1.4012,
+      "bias": 0.2057,
+      "total_actual": 282.0
+    },
+    {
+      "demand_type": "Smooth",
+      "model": "moving_average_7d",
+      "mae": 5.0593,
+      "wape": 0.5194,
+      "bias": 0.0602,
+      "total_actual": 16363.0
+    },
+    {
+      "demand_type": "Intermittent",
+      "model": "naive",
+      "mae": 1.3214,
+      "wape": 1.1774,
+      "bias": -0.2658,
+      "total_actual": 3394.0
+    },
+    {
+      "demand_type": "Lumpy",
+      "model": "naive",
+      "mae": 0.9167,
+      "wape": 1.0922,
+      "bias": -0.6028,
+      "total_actual": 282.0
+    },
+    {
+      "demand_type": "Smooth",
+      "model": "naive",
+      "mae": 5.6994,
+      "wape": 0.5852,
+      "bias": -0.1598,
+      "total_actual": 16363.0
+    },
+    {
+      "demand_type": "Intermittent",
+      "model": "seasonal_naive_7d",
+      "mae": 1.4821,
+      "wape": 1.3206,
+      "bias": 0.0171,
+      "total_actual": 3394.0
+    },
+    {
+      "demand_type": "Lumpy",
+      "model": "seasonal_naive_7d",
+      "mae": 1.3452,
+      "wape": 1.6028,
+      "bias": 0.2057,
+      "total_actual": 282.0
+    },
+    {
+      "demand_type": "Smooth",
+      "model": "seasonal_naive_7d",
+      "mae": 6.0601,
+      "wape": 0.6222,
+      "bias": 0.0602,
+      "total_actual": 16363.0
+    }
+  ],
+  "failure_summary": {
+    "total_skus_evaluated": 60,
+    "lgbm_wins": 41,
+    "ma28_wins": 19,
+    "overall_lgbm_win_rate_pct": 68.33,
+    "performance_by_demand_type": {
+      "Intermittent": {
+        "lgbm_wins": 30,
+        "total_items": 36,
+        "win_rate_pct": 83.3,
+        "avg_wape_lgbm": 113.1,
+        "avg_wape_ma28": 121.72
+      },
+      "Lumpy": {
+        "lgbm_wins": 4,
+        "total_items": 4,
+        "win_rate_pct": 100.0,
+        "avg_wape_lgbm": 113.3,
+        "avg_wape_ma28": 120.74
+      },
+      "Smooth": {
+        "lgbm_wins": 7,
+        "total_items": 20,
+        "win_rate_pct": 35.0,
+        "avg_wape_lgbm": 52.41,
+        "avg_wape_ma28": 51.62
+      }
+    }
+  }
+}

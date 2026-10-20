@@ -1,0 +1,32 @@
+lags:
+  # All lags MUST be >= 28 to support direct 28-day forecasting without future leakage
+  periods: [28, 35, 42, 49, 56]
+
+rolling_statistics:
+  # Rolling statistics are computed over shifted values (shift >= 28)
+  base_lag: 28
+  windows: [7, 14, 28]
+  aggregations: ["mean", "std", "min", "max"]
+
+calendar_features:
+  include_dow: true
+  include_month: true
+  include_is_weekend: true
+  include_event: true
+  include_snap: true
+
+price_features:
+  include_price_momentum: true    # price / rolling 4-week mean price
+  include_price_discount: true    # discount relative to historical max price
+  include_price_change: true      # percentage price difference from previous week
+
+categoricals:
+  - "item_id"
+  - "dept_id"
+  - "cat_id"
+  - "store_id"
+  - "state_id"
+  - "wday"
+  - "month"
+  - "event_name_1"
+  - "event_type_1"
