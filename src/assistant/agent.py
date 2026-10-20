@@ -2,8 +2,14 @@
 
 RULE: The LLM must NEVER fabricate or calculate numbers directly.
 All analytical answers are strictly constructed from deterministic tool execution results.
+
+Supported Providers:
+1. Groq (llama-3.3-70b-versatile) - Ultra-low-latency function calling via GROQ_API_KEY
+2. Google Gemini (gemini-2.5-flash) - Native tool calling via GEMINI_API_KEY
+3. Deterministic Local Engine - Zero-dependency offline rule-based intent execution
 """
 
+import json
 import os
 import re
 
@@ -25,17 +31,160 @@ CRITICAL OPERATIONAL RULES:
 class AnalystAssistant:
     """Natural-language analyst assistant powered by deterministic tool querying."""
 
-    def __init__(self, api_key: str | None = None):
-        self.api_key = api_key or os.environ.get("GEMINI_API_KEY")
+    def __init__(
+        self,
+        api_key: str | None = None,
+        groq_api_key: str | None = None,
+        gemini_api_key: str | None = None,
+    ):
+        # Check Streamlit secrets if running inside Streamlit Cloud
+        st_groq, st_gemini = None, None
+        try:
+            import streamlit as st
+
+            if hasattr(st, "secrets"):
+                st_groq = st.secrets.get("GROQ_API_KEY")
+                st_gemini = st.secrets.get("GEMINI_API_KEY")
+        except Exception:
+            pass
+
+        # Resolve Groq API Key
+        self.groq_api_key = (
+            groq_api_key
+            or (api_key if api_key and api_key.startswith("gsk_") else None)
+            or os.environ.get("GROQ_API_KEY")
+            or st_groq
+        )
+
+        # Resolve Gemini API Key
+        self.gemini_api_key = (
+            gemini_api_key
+            or (api_key if api_key and not api_key.startswith("gsk_") else None)
+            or os.environ.get("GEMINI_API_KEY")
+            or st_gemini
+        )
+
+        # General key pointer for backward compatibility
+        self.api_key = self.groq_api_key or self.gemini_api_key
+
+    @property
+    def active_provider(self) -> str:
+        """Return the active AI engine ('groq', 'gemini', or 'deterministic')."""
+        if self.groq_api_key:
+            return "groq"
+        if self.gemini_api_key:
+            return "gemini"
+        return "deterministic"
+
+    def _call_groq_with_tools(self, question: str) -> dict:
+        """Call Groq API with Llama-3.3-70b and native tool calling."""
+        url = "https://api.groq.com/openai/v1/chat/completions"
+        headers = {
+            "Authorization": f"Bearer {self.groq_api_key}",
+            "Content-Type": "application/json",
+        }
+
+        # Convert TOOL_DEFINITIONS to OpenAI/Groq function calling format
+        groq_tools = [
+            {
+                "type": "function",
+                "function": {
+                    "name": t["name"],
+                    "description": t["description"],
+                    "parameters": t["parameters"],
+                },
+            }
+            for t in TOOL_DEFINITIONS
+        ]
+
+        messages = [
+            {"role": "system", "content": SYSTEM_INSTRUCTION},
+            {"role": "user", "content": question},
+        ]
+
+        payload = {
+            "model": "llama-3.3-70b-versatile",
+            "messages": messages,
+            "tools": groq_tools,
+            "tool_choice": "auto",
+            "temperature": 0.1,
+            "max_tokens": 1024,
+        }
+
+        with httpx.Client(timeout=30.0) as client:
+            resp = client.post(url, headers=headers, json=payload)
+            if resp.status_code != 200:
+                raise RuntimeError(f"Groq API error ({resp.status_code}): {resp.text}")
+
+            data = resp.json()
+            choice = data["choices"][0]
+            message = choice["message"]
+
+            tool_calls = message.get("tool_calls")
+            if not tool_calls:
+                return {
+                    "answer": message.get("content", ""),
+                    "tools_called": [],
+                    "mode": "groq_direct",
+                }
+
+            # Execute all requested deterministic tools
+            executed_tools = []
+            turn_2_messages = list(messages)
+            turn_2_messages.append(message)
+
+            for tc in tool_calls:
+                call_id = tc.get("id")
+                func_name = tc.get("function", {}).get("name")
+                raw_args = tc.get("function", {}).get("arguments", "{}")
+                try:
+                    args = json.loads(raw_args) if isinstance(raw_args, str) else raw_args
+                except Exception:
+                    args = {}
+
+                tool_fn = TOOL_REGISTRY.get(func_name)
+                if not tool_fn:
+                    tool_result = {"error": f"Tool '{func_name}' not implemented."}
+                else:
+                    try:
+                        tool_result = tool_fn(**args)
+                    except Exception as err:
+                        tool_result = {"error": f"Execution error in {func_name}: {err}"}
+
+                executed_tools.append({"tool": func_name, "args": args, "result": tool_result})
+                turn_2_messages.append({
+                    "role": "tool",
+                    "tool_call_id": call_id,
+                    "name": func_name,
+                    "content": json.dumps(tool_result),
+                })
+
+            # Turn 2: Generate final analytical response with tool results
+            turn_2_payload = {
+                "model": "llama-3.3-70b-versatile",
+                "messages": turn_2_messages,
+                "temperature": 0.1,
+                "max_tokens": 1024,
+            }
+
+            resp_2 = client.post(url, headers=headers, json=turn_2_payload)
+            if resp_2.status_code == 200:
+                final_answer = resp_2.json()["choices"][0]["message"].get("content", "")
+            else:
+                final_answer = f"Query Completed via Groq:\n\n{json.dumps(executed_tools, indent=2)}"
+
+            return {
+                "answer": final_answer,
+                "tools_called": executed_tools,
+                "mode": "groq_function_calling",
+            }
 
     def _call_gemini_with_tools(self, question: str) -> dict:
         """Call Gemini API with function calling declarations."""
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={self.api_key}"
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={self.gemini_api_key}"
 
-        # Format tools for Gemini schema
         gemini_tools = [{"function_declarations": TOOL_DEFINITIONS}]
 
-        # Turn 1: Send user question with tools
         payload = {
             "contents": [{"role": "user", "parts": [{"text": question}]}],
             "tools": gemini_tools,
@@ -54,20 +203,17 @@ class AnalystAssistant:
 
             first_part = candidates[0].get("content", {}).get("parts", [{}])[0]
 
-            # Check if model requested a function call
             if "functionCall" in first_part:
                 func_call = first_part["functionCall"]
                 func_name = func_call["name"]
                 func_args = func_call.get("args", {})
 
-                # Execute deterministic tool
                 tool_func = TOOL_REGISTRY.get(func_name)
                 if not tool_func:
                     tool_result = {"error": f"Tool '{func_name}' not implemented."}
                 else:
                     tool_result = tool_func(**func_args)
 
-                # Turn 2: Feed function response back to Gemini to format executive answer
                 turn_2_payload = {
                     "contents": [
                         {"role": "user", "parts": [{"text": question}]},
@@ -99,7 +245,6 @@ class AnalystAssistant:
                     "mode": "gemini_function_calling",
                 }
             else:
-                # Model returned text directly
                 return {
                     "answer": first_part.get("text", ""),
                     "tools_called": [],
@@ -107,10 +252,7 @@ class AnalystAssistant:
                 }
 
     def _deterministic_fallback(self, question: str) -> dict:
-        """Deterministic intent-matching fallback when no external API key is configured.
-
-        Guarantees that the assistant is 100% testable and runnable offline.
-        """
+        """Deterministic intent-matching fallback when no external API key is configured."""
         q = question.lower()
         tools_called = []
 
@@ -211,13 +353,21 @@ class AnalystAssistant:
         return {"answer": answer, "tools_called": tools_called, "mode": "deterministic_fallback"}
 
     def ask(self, question: str) -> dict:
-        """Process analyst query using tool-calling or deterministic fallback."""
-        if self.api_key:
+        """Process analyst query using Groq, Gemini, or deterministic fallback."""
+        if self.groq_api_key:
+            try:
+                return self._call_groq_with_tools(question)
+            except Exception as e:
+                result = self._deterministic_fallback(question)
+                result["api_warning"] = f"Groq API error ({e}), executed via local fallback."
+                return result
+
+        if self.gemini_api_key:
             try:
                 return self._call_gemini_with_tools(question)
             except Exception as e:
-                # If API call fails (e.g. invalid key or network error), gracefully fall back
                 result = self._deterministic_fallback(question)
-                result["api_warning"] = f"Gemini API fallback invoked: {e}"
+                result["api_warning"] = f"Gemini API error ({e}), executed via local fallback."
                 return result
+
         return self._deterministic_fallback(question)

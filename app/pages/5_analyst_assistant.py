@@ -23,17 +23,28 @@ Ask operational questions about forecasting accuracy, store anomalies, or replen
 > over precomputed artifacts.
 """)
 
-# Optional API Key input in sidebar
-st.sidebar.header("🔑 Gemini API Settings (Optional)")
+# Assistant probing for active engine
+probe_assistant = AnalystAssistant()
+active_mode = probe_assistant.active_provider
+
+st.sidebar.header("⚡ Built-in AI Engine")
+if active_mode == "groq":
+    st.sidebar.success("🟢 **Built-in Groq Active** (`llama-3.3-70b-versatile`)")
+elif active_mode == "gemini":
+    st.sidebar.success("🟢 **Built-in Gemini Active** (`gemini-2.5-flash`)")
+else:
+    st.sidebar.info("⚪ **Deterministic Local Mode** (Add `GROQ_API_KEY` to enable live LLM)")
+
 user_api_key = st.sidebar.text_input(
-    "Gemini API Key",
+    "Custom Groq or Gemini API Key (Optional)",
     type="password",
-    help="Optional: If left blank, the assistant runs in deterministic local mode.",
+    help="Optional: If you configured GROQ_API_KEY as an env variable or in Streamlit Secrets, leave this blank.",
 )
 if user_api_key:
-    st.sidebar.success("Custom Gemini API key active (Function Calling Mode).")
-else:
-    st.sidebar.info("Running in deterministic local tool-dispatch mode.")
+    if user_api_key.startswith("gsk_"):
+        st.sidebar.success("Custom Groq API key active (Llama 3.3 70B).")
+    else:
+        st.sidebar.success("Custom Gemini API key active (Gemini 2.5 Flash).")
 
 st.sidebar.markdown("---")
 st.sidebar.subheader("💡 Suggested Prompts")

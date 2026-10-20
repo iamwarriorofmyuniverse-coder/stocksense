@@ -44,3 +44,7 @@ Thumbs.db
 # Project-specific logs & temp
 *.log
 scratch/
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
