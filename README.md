@@ -1,6 +1,7 @@
 # 📦 StockSense: Multi-Store Retail Demand Forecasting & Replenishment Engine
 
-[![StockSense CI](https://github.com/your-username/stocksense/actions/workflows/ci.yml/badge.svg)](https://github.com/your-username/stocksense/actions)
+[![StockSense CI](https://github.com/iamwarriorofmyuniverse-coder/stocksense/actions/workflows/ci.yml/badge.svg)](https://github.com/iamwarriorofmyuniverse-coder/stocksense/actions)
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=iamwarriorofmyuniverse-coder/stocksense&branch=main&mainModule=app/main.py)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -9,10 +10,12 @@
 
 ---
 
-## 🌐 Live Deployments
+## 🌐 Live Deployments & Repository
 
-* **🖥️ Interactive Streamlit Dashboard**: [http://localhost:8501](http://localhost:8501) *(or your deployed Streamlit Community Cloud URL)*
-* **⚡ REST API & Swagger UI**: [http://localhost:8000/docs](http://localhost:8000/docs) *(or your deployed Render URL)*
+* **GitHub Repository**: [https://github.com/iamwarriorofmyuniverse-coder/stocksense](https://github.com/iamwarriorofmyuniverse-coder/stocksense)
+* **1-Click Streamlit Cloud Deploy**: [Launch on Streamlit Community Cloud](https://share.streamlit.io/deploy?repository=iamwarriorofmyuniverse-coder/stocksense&branch=main&mainModule=app/main.py)
+* **Local Streamlit Dashboard**: [http://localhost:8501](http://localhost:8501)
+* **Local FastAPI Microservice & Swagger UI**: [http://127.0.0.1:8001/docs](http://127.0.0.1:8001/docs)
 
 > **Note on Free-Tier Cloud Hosting**: Free-tier cloud instances (Streamlit Community Cloud and Render) sleep after 15 minutes of inactivity. The initial cold start takes ~30–50 seconds; once awake, all operations respond in milliseconds because the app serves precomputed artifacts with **zero runtime training**.
 
