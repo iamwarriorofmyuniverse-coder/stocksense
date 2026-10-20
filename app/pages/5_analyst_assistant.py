@@ -37,8 +37,6 @@ for s in suggestions:
 
 st.sidebar.markdown("---")
 st.sidebar.caption("⚡ **Engine**: Built-in Tool-Grounded Supply Chain Intelligence")
-    if st.sidebar.button(s, key=f"btn_{s}"):
-        st.session_state["analyst_input"] = s
 
 # Initialize message history
 if "messages" not in st.session_state:
