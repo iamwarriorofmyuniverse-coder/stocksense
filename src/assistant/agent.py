@@ -39,18 +39,30 @@ class AnalystAssistant:
         try:
             import streamlit as st
 
-            if hasattr(st, "secrets"):
-                st_groq = st.secrets.get("GROQ_API_KEY")
+            for candidate in ["GROQ_API_KEY", "groq_api_key", "GROQ_KEY", "groq_key", "GROQ"]:
+                try:
+                    if candidate in st.secrets:
+                        val = str(st.secrets[candidate]).strip().strip('"').strip("'")
+                        if val:
+                            st_groq = val
+                            break
+                except Exception:
+                    pass
         except Exception:
             pass
 
-        # Resolve Groq API Key
-        self.groq_api_key = (
+        # Resolve Groq API Key with normalization
+        raw_key = (
             groq_api_key
             or api_key
             or os.environ.get("GROQ_API_KEY")
+            or os.environ.get("groq_api_key")
             or st_groq
         )
+        if raw_key:
+            self.groq_api_key = str(raw_key).strip().strip('"').strip("'")
+        else:
+            self.groq_api_key = None
         self.api_key = self.groq_api_key
 
     @property
