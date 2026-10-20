@@ -9,7 +9,8 @@ from pathlib import Path
 
 import pandas as pd
 
-ARTIFACTS_DIR = Path("artifacts")
+ROOT_DIR = Path(__file__).resolve().parent.parent.parent
+ARTIFACTS_DIR = ROOT_DIR / "artifacts" if (ROOT_DIR / "artifacts").exists() else Path("artifacts")
 
 
 def _load_granular_eval() -> dict:

@@ -1,11 +1,22 @@
 """Page 2: Model vs Baseline - Transparent Segmented Scorecard and Failure Modes."""
 
+import sys
+from pathlib import Path
+
+# Add repository root to sys.path
+ROOT_DIR = Path(__file__).resolve().parent.parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 
-from app.utils import load_failure_analysis, load_granular_evaluation
+try:
+    from app.utils import load_failure_analysis, load_granular_evaluation
+except ImportError:
+    from utils import load_failure_analysis, load_granular_evaluation
 
 st.set_page_config(page_title="Model vs Baseline | StockSense", page_icon="⚖️", layout="wide")
 

@@ -3,9 +3,20 @@
 Streamlit Flagship Portfolio Application for Reliance Retail Review.
 """
 
+import sys
+from pathlib import Path
+
+# Add repository root to sys.path so 'app' and 'src' modules resolve cleanly in cloud deployment
+ROOT_DIR = Path(__file__).resolve().parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
 import streamlit as st
 
-from app.utils import load_granular_evaluation, load_simulation_summary
+try:
+    from app.utils import load_granular_evaluation, load_simulation_summary
+except ImportError:
+    from utils import load_granular_evaluation, load_simulation_summary
 
 st.set_page_config(
     page_title="StockSense | Demand Forecasting & Replenishment",

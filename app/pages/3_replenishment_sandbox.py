@@ -1,10 +1,21 @@
 """Page 3: Replenishment Simulator (The Centerpiece) - Live Interactive Policy Sandbox."""
 
+import sys
+from pathlib import Path
+
+# Add repository root to sys.path
+ROOT_DIR = Path(__file__).resolve().parent.parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
-from app.utils import load_backtest_predictions
+try:
+    from app.utils import load_backtest_predictions
+except ImportError:
+    from utils import load_backtest_predictions
 from src.simulation.simulator import InventorySimulator
 
 st.set_page_config(page_title="Replenishment Simulator | StockSense", page_icon="⚙️", layout="wide")

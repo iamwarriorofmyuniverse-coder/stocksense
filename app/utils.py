@@ -6,7 +6,8 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-ARTIFACTS_DIR = Path("artifacts")
+ROOT_DIR = Path(__file__).resolve().parent.parent
+ARTIFACTS_DIR = ROOT_DIR / "artifacts" if (ROOT_DIR / "artifacts").exists() else Path("artifacts")
 
 
 @st.cache_data

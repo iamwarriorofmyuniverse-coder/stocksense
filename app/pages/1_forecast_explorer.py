@@ -1,10 +1,21 @@
 """Page 1: Forecast Explorer - SKU-Level Forecast vs Actual with Uncertainty Bands."""
 
+import sys
+from pathlib import Path
+
+# Add repository root to sys.path
+ROOT_DIR = Path(__file__).resolve().parent.parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
 import numpy as np
 import plotly.graph_objects as go
 import streamlit as st
 
-from app.utils import load_backtest_predictions, load_failure_analysis
+try:
+    from app.utils import load_backtest_predictions, load_failure_analysis
+except ImportError:
+    from utils import load_backtest_predictions, load_failure_analysis
 
 st.set_page_config(page_title="Forecast Explorer | StockSense", page_icon="📈", layout="wide")
 
