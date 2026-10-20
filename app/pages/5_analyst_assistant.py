@@ -23,33 +23,7 @@ Ask operational questions about forecasting accuracy, store anomalies, or replen
 > over precomputed artifacts.
 """)
 
-st.sidebar.header("⚡ Built-in AI Engine")
-
-user_api_key = st.sidebar.text_input(
-    "Custom Groq API Key (Optional)",
-    type="password",
-    help="Paste your Groq API Key (gsk_...) here, or save it in Streamlit Cloud Secrets.",
-)
-
-# Assistant probing for active engine (evaluates user input, secrets, and env)
-probe_assistant = AnalystAssistant(api_key=user_api_key if user_api_key else None)
-active_mode = getattr(probe_assistant, "active_provider", "deterministic")
-if callable(active_mode):
-    active_mode = active_mode()
-
-if active_mode == "groq":
-    if user_api_key:
-        st.sidebar.success("🟢 **Custom Groq Key Active** (`llama-3.3-70b-versatile`)")
-    else:
-        st.sidebar.success("🟢 **Built-in Groq Active** (`llama-3.3-70b-versatile`)")
-else:
-    st.sidebar.info(
-        "⚪ **Deterministic Local Mode**\n\n"
-        "*(If you already saved Secrets in Cloud Settings, click **Rerun** or paste your `gsk_...` key above)*"
-    )
-
-st.sidebar.markdown("---")
-st.sidebar.subheader("💡 Suggested Prompts")
+st.sidebar.header("💡 Suggested Prompts")
 suggestions = [
     "Why did forecast error spike for store CA_1?",
     "Where does LightGBM lose to the baseline heuristic?",
@@ -58,6 +32,11 @@ suggestions = [
 ]
 
 for s in suggestions:
+    if st.sidebar.button(s, key=f"btn_{s}"):
+        st.session_state["analyst_input"] = s
+
+st.sidebar.markdown("---")
+st.sidebar.caption("⚡ **Engine**: Built-in Tool-Grounded Supply Chain Intelligence")
     if st.sidebar.button(s, key=f"btn_{s}"):
         st.session_state["analyst_input"] = s
 
@@ -97,7 +76,7 @@ if prompt:
         st.markdown(prompt)
 
     # Process via AnalystAssistant
-    assistant = AnalystAssistant(api_key=user_api_key if user_api_key else None)
+    assistant = AnalystAssistant()
     with st.chat_message("assistant"):
         with st.spinner("Executing deterministic analytical tools over artifacts..."):
             response = assistant.ask(prompt)
