@@ -1,0 +1,19 @@
+name: Keep Streamlit App Awake
+
+on:
+  schedule:
+    # Runs every 15 minutes to keep Streamlit Community Cloud container warm
+    - cron: '*/15 * * * *'
+  workflow_dispatch: # Allows manual trigger anytime from GitHub Actions tab
+
+jobs:
+  ping-app:
+    name: Ping StockSense Web App
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send keep-alive ping
+        run: |
+          echo "Pinging https://stocksense-retail.streamlit.app at $(date -u)"
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" -L --max-time 30 https://stocksense-retail.streamlit.app || echo "failed")
+          echo "Received HTTP response: $HTTP_STATUS"
+          echo "Keep-alive ping dispatched successfully."
